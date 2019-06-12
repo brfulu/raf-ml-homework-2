@@ -20,3 +20,5 @@ ret, sure_fg = cv2.threshold(dist_transform, 0.7 * dist_transform.max(), 255, 0)
 # Finding unknown region
 sure_fg = np.uint8(sure_fg)
 unknown = cv2.subtract(sure_bg, sure_fg)
+
+print('evo me')
