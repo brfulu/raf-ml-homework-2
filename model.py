@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from keras.optimizers import Adam
 from keras.losses import categorical_crossentropy
-from keras.layers import Conv2D, MaxPooling2D, Dense, Dropout, Flatten
+from keras.layers import Conv2D, MaxPooling2D, Dense, Dropout, Flatten, BatchNormalization
 from keras.models import Sequential
 
 # Ucitavanje FashionMNIST skupa podataka
@@ -40,41 +40,20 @@ input_shape = (28, 28, 1)
 # Model definition
 model = Sequential()
 
-# 1 layer
-# model.add(Conv2D(filters=32, kernel_size=(3, 3), activation='relu', input_shape=input_shape))
-# model.add(MaxPooling2D(pool_size=(2, 2)))
-# model.add(Dropout(0.2))
-#
-# model.add(Flatten())
-# model.add(Dense(32, activation='relu'))
-# model.add(Dense(10, activation='softmax'))
-
-# # 2 layers
-# model.add(Conv2D(filters=32, kernel_size=3, activation='relu', input_shape=input_shape))
-# model.add(MaxPooling2D(pool_size=2))
-# model.add(Dropout(0.2))
-#
-# model.add(Conv2D(filters=64, kernel_size=3, activation='relu'))
-# model.add(Dropout(0.25))
-#
-# model.add(Flatten())
-# model.add(Dense(64, activation='relu'))
-# model.add(Dense(10, activation='softmax'))
-
-# 3 layers
-model.add(Conv2D(filters=32, kernel_size=3, activation='relu', input_shape=input_shape, kernel_initializer='he_normal'))
+model.add(Conv2D(filters=32, kernel_size=3, activation='relu', input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=2))
-model.add(Dropout(rate=0.25))
+model.add(Dropout(rate=0.20))
 
 model.add(Conv2D(filters=64, kernel_size=3, activation='relu'))
 model.add(Dropout(rate=0.25))
 
 model.add(Conv2D(filters=128, kernel_size=3, activation='relu'))
-model.add(Dropout(rate=0.4))
+model.add(Dropout(rate=0.35))
 
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
-model.add(Dropout(rate=0.4))
+model.add(BatchNormalization())
+model.add(Dropout(rate=0.35))
 model.add(Dense(10, activation='softmax'))
 
 # Print model summary
@@ -84,16 +63,16 @@ print(model.summary())
 model.compile(loss=categorical_crossentropy, optimizer=Adam(), metrics=['accuracy'])
 
 # Model training
-model.fit(x_train, y_train, batch_size=512, epochs=60)
+model.fit(x_train, y_train, batch_size=512, epochs=40)
 
 # Evaluate the model on test set
 score = model.evaluate(x_test, y_test, verbose=1)
 
 # Print test accuracy
-print('\n', 'Test loss:', score[0])
+print('\nTest loss:', score[0])
 print('Test accuracy : ' + str(score[1] * 100) + '%')
 
 #################################################################################
 
 # Cuvanje istreniranog modela u fajl
-model.save('fashion3   .h5')
+model.save('fashion.h5')
