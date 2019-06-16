@@ -40,6 +40,11 @@ cv2.fastNlMeansDenoisingColored(solution, solution1, 70, 21, 7, 12)
 gray = cv2.cvtColor(solution1, cv2.COLOR_BGR2GRAY)
 blurred = cv2.GaussianBlur(gray, (5, 5), 1)
 thresh = cv2.threshold(blurred, 225, 255, cv2.THRESH_BINARY)[1]
+
+#kernel = np.ones((5, 5), np.uint8)
+#th3 = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel, iterations=3)
+#th4 = cv2.morphologyEx(th3, cv2.MORPH_CLOSE, kernel, iterations=3)
+#imgray = cv2.cvtColor(th4, cv2.COLOR_BGR2GRAY)
 thresh = cv2.bitwise_not(thresh)
 
 contours, hierachy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -85,9 +90,6 @@ for contour in contours:
 
 	plt.imshow(input_img, cmap='gray', vmin=0, vmax=1)
 	# plt.show()
-
-	# plt.imshow(square_img, cmap='gray', vmin=0, vmax=255)
-	# plt.show())
 
 	input_img = input_img.reshape(1, 28, 28, 1)
 	probabilities = model.predict(input_img)
