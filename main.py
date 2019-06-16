@@ -47,6 +47,7 @@ contours, hierachy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SI
 fashion_items = []
 delta_x = 3
 delta_y = 3
+copy_img = img.copy()
 
 for contour in contours:
 	x, y, w, h = cv2.boundingRect(contour)
@@ -59,7 +60,7 @@ for contour in contours:
 
 	w = int (w +  delta_x)
 	h = int (h +  delta_y)
-	cropped_img = (img[y: y + h, x: x + w]).copy()
+	cropped_img = (copy_img[y: y + h, x: x + w]).copy()
 
 	# Getting the bigger side of the image
 	s = max(cropped_img.shape[0:2])
@@ -82,11 +83,10 @@ for contour in contours:
 	# input_img = 1 - input_img
 	input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
 
-	# plt.imshow(square_img, cmap='gray', vmin=0, vmax=255)
-	# plt.show()
-
-	#plt.imshow(input_img, cmap='gray', vmin=0, vmax=1)
-	#plt.show()
+	plt.imshow(input_img, cmap='gray', vmin=0, vmax=1)
+	plt.show()
+	 #plt.imshow(square_img, cmap='gray', vmin=0, vmax=255)
+	 #plt.show())
 
 	input_img = input_img.reshape(1, 28, 28, 1)
 	probabilities = model.predict(input_img)
