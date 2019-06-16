@@ -31,24 +31,24 @@ print(x_test.shape, y_test.shape)
 print(x_train.shape[0], 'train set')
 print(x_test.shape[0], 'test set')
 
-# Define the text labels
-fashion_mnist_labels = ["T-shirt/top",  # index 0
-						"Trouser",  # index 1
-						"Pullover",  # index 2
-						"Dress",  # index 3
-						"Coat",  # index 4
-						"Sandal",  # index 5
-						"Shirt",  # index 6
-						"Sneaker",  # index 7
-						"Bag",  # index 8
-						"Ankle boot"]  # index 9
+# # Define the text labels
+# fashion_mnist_labels = ["T-shirt/top",  # index 0
+# 						"Trouser",  # index 1
+# 						"Pullover",  # index 2
+# 						"Dress",  # index 3
+# 						"Coat",  # index 4
+# 						"Sandal",  # index 5
+# 						"Shirt",  # index 6
+# 						"Sneaker",  # index 7
+# 						"Bag",  # index 8
+# 						"Ankle boot"]  # index 9
 
 # Image index, you can pick any number between 0 and 59,999
 img_index = 5
 # y_train contains the lables, ranging from 0 to 9
 label_index = np.argmax(y_train[img_index])
 # Print the label, for example 2 Pullover
-print("y = " + str(label_index) + " " + (fashion_mnist_labels[label_index]))
+# print("y = " + str(label_index) + " " + (fashion_mnist_labels[label_index]))
 # # Show one of the images from the training dataset
 plt.imshow(x_train[img_index], cmap='gray', vmin=0, vmax=255)
 plt.show()
@@ -110,7 +110,7 @@ print(model.summary())
 model.compile(loss=categorical_crossentropy, optimizer=Adam(), metrics=['accuracy'])
 
 # Model training
-model.fit(x_train, y_train, batch_size=512, epochs=50)
+model.fit(x_train, y_train, batch_size=512, epochs=70)
 
 # Evaluate the model on test set
 score = model.evaluate(x_test, y_test, verbose=1)
@@ -122,4 +122,4 @@ print('Test accuracy:', score[1])
 #################################################################################
 
 # Cuvanje istreniranog modela u fajl
-model.save('fashion.h5')
+model.save('fashion2.h5')
