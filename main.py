@@ -18,7 +18,7 @@ img = cv2.imread('tests/{}.png'.format(tp_idx))
 # Ne menjati fajl van ove sekcije.
 
 # Ucitavamo model
-model = keras.models.load_model('fashion.h5')
+model = keras.models.load_model('fashion3.h5')
 
 # TODO
 # Define the text labels
@@ -55,11 +55,11 @@ for contour in contours:
 	x = x - delta_x
 	y = y - delta_y
 
-	if w * h < 80:
+	if w * h < 100:
 		continue
 
-	w = int (w +  delta_x)
-	h = int (h +  delta_y)
+	w = int(w + delta_x)
+	h = int(h + delta_y)
 	cropped_img = (copy_img[y: y + h, x: x + w]).copy()
 
 	# Getting the bigger side of the image
@@ -84,9 +84,10 @@ for contour in contours:
 	input_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
 
 	plt.imshow(input_img, cmap='gray', vmin=0, vmax=1)
-	plt.show()
-	 #plt.imshow(square_img, cmap='gray', vmin=0, vmax=255)
-	 #plt.show())
+	# plt.show()
+
+	# plt.imshow(square_img, cmap='gray', vmin=0, vmax=255)
+	# plt.show())
 
 	input_img = input_img.reshape(1, 28, 28, 1)
 	probabilities = model.predict(input_img)
@@ -95,6 +96,14 @@ for contour in contours:
 	# print(prediction)
 	label = fashion_mnist_labels[prediction]
 	print(label)
+
+	font = cv2.FONT_HERSHEY_SIMPLEX
+	bottomLeftCornerOfText = (x, y - 4)
+	fontScale = 0.4
+	fontColor = (0, 0, 255)
+	lineType = 1
+
+	cv2.putText(img, fashion_mnist_labels[prediction], bottomLeftCornerOfText, font, fontScale, fontColor, lineType)
 
 # u fashion_items se nalaze sve izdvojene slike koje imaju su dimenzije 28x28
 

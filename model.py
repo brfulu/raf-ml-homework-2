@@ -84,7 +84,7 @@ print(model.summary())
 model.compile(loss=categorical_crossentropy, optimizer=Adam(), metrics=['accuracy'])
 
 # Model training
-model.fit(x_train, y_train, batch_size=64, epochs=100)
+model.fit(x_train, y_train, batch_size=512, epochs=60)
 
 # Evaluate the model on test set
 score = model.evaluate(x_test, y_test, verbose=1)
@@ -96,4 +96,4 @@ print('Test accuracy : ' + str(score[1] * 100) + '%')
 #################################################################################
 
 # Cuvanje istreniranog modela u fajl
-model.save('fashion2.h5')
+model.save('fashion3   .h5')
